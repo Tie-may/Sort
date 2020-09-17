@@ -4,11 +4,12 @@ import java.util.Arrays;
 
 public class Sort {
     public static void main(String[] args) {
-        int[] arr = new int[]{7, 8, 1, 3, 4, 79, 6, 5, 9, 57, /*999, */9, 4, 70, 95, 79, 83, 29, 0, 54, 71, 29, 50, 7, 32, 7, 58, 9, 635, 27, 48, 96, 52, 0, 78, 97};
+        int[] arr = new int[]{50, 8, 1, 3, 4, 79, 6, 5, 9, 57, /*999, */9, 4, 70, 95, 79, 83, 29, 0, 54, 71, 29, 50, 7, 32, 7, 58, 9, 635, 27, 48, 96, 52, 0, 78, 97};
 //        bobbleSort(arr);
 //        select_sort(arr);
 //        insert_sort(arr);
-        shell_sort(arr);
+//        shell_sort(arr);
+        quickSort(arr, 0, arr.length - 1);
         traversal(arr);
     }
 
@@ -75,5 +76,36 @@ public class Sort {
             }
         }
     }
+
+    // 快速排序(挖坑填补+分治)
+    public static void quickSort(int[] arr, int left, int right) {
+        if (left >= right) {
+            return;
+        }
+        int i = left;
+        int j = right;
+        int num = arr[i];
+        while (i < j) {
+            while (i < j && arr[j] > num) {
+                j--;
+            }
+            if (i < j) {
+                arr[i] = arr[j];
+                i++;
+            }
+            while (i < j && arr[i] < num) {
+                i++;
+            }
+            if (i < j) {
+                arr[j] = arr[i];
+                j--;
+            }
+        }
+        arr[i] = num;
+        quickSort(arr, left, j - 1);
+        quickSort(arr, i + 1, right);
+    }
+
+
 }
 
