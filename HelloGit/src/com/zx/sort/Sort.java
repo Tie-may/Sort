@@ -35,7 +35,7 @@ public class Sort {
         }
     }
 
-    // 选择排序
+    // 选择排序(假设i值前面是有序的)
     public static void select_sort(int[] arr) {
         for (int i = 0; i < arr.length - 1; i++) {
             for (int j = i + 1; j < arr.length; j++) {
