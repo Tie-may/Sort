@@ -4,8 +4,9 @@ import java.util.Arrays;
 
 public class Sort {
     public static void main(String[] args) {
-        int[] arr = new int[]{4, 7, 1, 8, 3, 2, 9, 6, 5, 10};
-        bobbleSort(arr);
+        int[] arr = new int[]{7,8,1,3,4,79,1,6,5,0,9,1,57,9,0,4,70,95,79,83,29,0,54,71,29,50,7,32,0,7,58,9,635,27,48,96,52,0,78,97};
+//        bobbleSort(arr);
+        select_sort(arr);
         traversal(arr);
     }
 
@@ -31,6 +32,17 @@ public class Sort {
                 }
             }
             if (!flag) return;
+        }
+    }
+
+    // 选择排序(假设i值前面是有序的)
+    public static void select_sort(int[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[j] < arr[i]) {
+                    exchange(arr, i, j);
+                }
+            }
         }
     }
 }
