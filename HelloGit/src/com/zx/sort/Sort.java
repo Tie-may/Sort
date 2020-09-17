@@ -4,10 +4,11 @@ import java.util.Arrays;
 
 public class Sort {
     public static void main(String[] args) {
-        int[] arr = new int[]{7, 8, 1, 3, 4, 79, 6, 5, 9, 57, 999, 9, 4, 70, 95, 79, 83, 29, 0, 54, 71, 29, 50, 7, 32, 7, 58, 9, 635, 27, 48, 96, 52, 0, 78, 97};
+        int[] arr = new int[]{7, 8, 1, 3, 4, 79, 6, 5, 9, 57, /*999, */9, 4, 70, 95, 79, 83, 29, 0, 54, 71, 29, 50, 7, 32, 7, 58, 9, 635, 27, 48, 96, 52, 0, 78, 97};
 //        bobbleSort(arr);
 //        select_sort(arr);
-        insert_sort(arr);
+//        insert_sort(arr);
+        shell_sort(arr);
         traversal(arr);
     }
 
@@ -54,6 +55,23 @@ public class Sort {
                 if (arr[j] > arr[j + 1]) {
                     exchange(arr, j, j + 1);
                 } else break;
+            }
+        }
+    }
+
+    // 希尔排序(分组后对每组进行插入排序，直到组数为一)
+    public static void shell_sort(int[] arr) {
+        int incre = arr.length;
+        while (incre > 1) {
+            incre /= 2;
+            for (int k = 0; k < incre; k++) {
+                for (int i = k; i < arr.length - incre; i += incre) {
+                    for (int j = i; j >= k; j -= incre) {
+                        if (arr[j] > arr[j + incre]) {
+                            exchange(arr, j, j + incre);
+                        } else break;
+                    }
+                }
             }
         }
     }
