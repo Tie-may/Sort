@@ -1,15 +1,17 @@
 package com.zx.sort;
 
+import java.time.temporal.Temporal;
 import java.util.Arrays;
 
 public class Sort {
     public static void main(String[] args) {
-        int[] arr = new int[]{50, 8, 1, 3, 4, 79, 6, 5, 9, 57, /*999, */9, 4, 70, 95, 79, 83, 29, 0, 54, 71, 29, 50, 7, 32, 7, 58, 9, 635, 27, 48, 96, 52, 0, 78, 97};
+        int[] arr = new int[]{50, 8, 1, 3, 4, 79, 6, 5, 9, 57, 999, 9, 4, 70, 95, 79, 83, 29, 0, 54, 71, 29, 50, 7, 32, 7, 58, 9, 635, 27, 48, 96, 52, 0, 78, 97};
 //        bobbleSort(arr);
 //        select_sort(arr);
 //        insert_sort(arr);
 //        shell_sort(arr);
-        quickSort(arr, 0, arr.length - 1);
+//        quickSort(arr, 0, arr.length - 1);
+        merge_sort(arr, 0, arr.length - 1);
         traversal(arr);
     }
 
@@ -18,7 +20,7 @@ public class Sort {
     }
 
     // 交换数组中某两个下标的值
-    public static void exchange(int[] arr, int i, int j) {
+    private static void exchange(int[] arr, int i, int j) {
         int temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
@@ -106,6 +108,50 @@ public class Sort {
         quickSort(arr, i + 1, right);
     }
 
+    // 归并排序
+    public static void merge_sort(int[] arr, int first, int last) {
+        if (first < last) {
+            int middle = (first + last) / 2;
+            merge_sort(arr, first, middle);
+            merge_sort(arr, middle + 1, last);
+            mergeArray(arr, first, middle, last);
+        }
+    }
+
+    // 合并 ：将两个序列a[first~middle],a[middle+1~end]合并
+    private static void mergeArray(int[] arr, int first, int middle, int last) {
+        int i = first;
+        int m = middle;
+        int j = middle + 1;
+        int n = last;
+        int k = 0;
+        int length = last - first + 1;
+        int[] temp = new int[length];
+        while (i <= m && j <= n) {
+            if (arr[i] > arr[j]) {
+                temp[k] = arr[j];
+                j++;
+                k++;
+            } else {
+                temp[k] = arr[i];
+                i++;
+                k++;
+            }
+        }
+        while (i <= m) {
+            temp[k] = arr[i];
+            i++;
+            k++;
+        }
+        while (j <= n) {
+            temp[k] = arr[j];
+            j++;
+            k++;
+        }
+        for (int p = 0; p < k; p++) {
+            arr[first + p] = temp[p];
+        }
+    }
 
 }
 
