@@ -11,7 +11,8 @@ public class Sort {
 //        shell_sort(arr);
 //        quickSort(arr, 0, arr.length - 1);
 //        merge_sort(arr, 0, arr.length - 1);
-        minHead_sort(arr);
+//        minHead_sort(arr);
+        radix_Sort(arr, 3);
         traversal(arr);
     }
 
@@ -154,10 +155,11 @@ public class Sort {
     // 堆排序
     public static void minHead_sort(int[] arr) {
         int length = arr.length;
-        for (int i = 0; i < arr.length - 1; i++,length--) {
-            minHead(arr,length);
+        for (int i = 0; i < arr.length - 1; i++, length--) {
+            minHead(arr, length);
         }
     }
+
     // 构建最小堆
     private static void minHead(int[] arr, int length) {
         int i = length / 2 - 1; // 第一个非叶子结点
@@ -174,5 +176,32 @@ public class Sort {
         exchange(arr, 0, length - 1);
     }
 
+    // 基数排序
+    public static void radix_Sort(int[] arr, int k) {
+        int[] temp = new int[arr.length];
+        int[] cnt = new int[10];
+        int r = 10;
+        for (int i = 0, rock = 1; i < k; i++, rock *= r) {
+            // 初始化
+            for (int j = 0; j < cnt.length; j++) {
+                cnt[j] = 0;
+            }
+            //计算每个箱子的数字个数
+            for (int j = 0; j < arr.length; j++) {
+                cnt[(arr[j] / rock) % r]++;
+            }
+            // cnt[j]的个数修改为前j个箱子一共有几个数字
+            for (int j = 1; j < cnt.length; j++) {
+                cnt[j] = cnt[j - 1] + cnt[j];
+            }
+            for (int j = arr.length - 1; j >= 0; j--) {
+                cnt[(arr[j] / rock) % r]--;
+                temp[cnt[(arr[j] / rock) % r]] = arr[j];
+            }
+            for (int j = 0; j < arr.length; j++) {
+                arr[j] = temp[j];
+            }
+        }
+    }
 }
 
