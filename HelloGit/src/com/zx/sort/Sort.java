@@ -1,6 +1,5 @@
 package com.zx.sort;
 
-import java.time.temporal.Temporal;
 import java.util.Arrays;
 
 public class Sort {
@@ -11,7 +10,8 @@ public class Sort {
 //        insert_sort(arr);
 //        shell_sort(arr);
 //        quickSort(arr, 0, arr.length - 1);
-        merge_sort(arr, 0, arr.length - 1);
+//        merge_sort(arr, 0, arr.length - 1);
+        minHead_sort(arr);
         traversal(arr);
     }
 
@@ -121,13 +121,11 @@ public class Sort {
     // 合并 ：将两个序列a[first~middle],a[middle+1~end]合并
     private static void mergeArray(int[] arr, int first, int middle, int last) {
         int i = first;
-        int m = middle;
         int j = middle + 1;
-        int n = last;
         int k = 0;
         int length = last - first + 1;
         int[] temp = new int[length];
-        while (i <= m && j <= n) {
+        while (i <= middle && j <= last) {
             if (arr[i] > arr[j]) {
                 temp[k] = arr[j];
                 j++;
@@ -138,12 +136,12 @@ public class Sort {
                 k++;
             }
         }
-        while (i <= m) {
+        while (i <= middle) {
             temp[k] = arr[i];
             i++;
             k++;
         }
-        while (j <= n) {
+        while (j <= last) {
             temp[k] = arr[j];
             j++;
             k++;
@@ -151,6 +149,29 @@ public class Sort {
         for (int p = 0; p < k; p++) {
             arr[first + p] = temp[p];
         }
+    }
+
+    // 堆排序
+    public static void minHead_sort(int[] arr) {
+        int length = arr.length;
+        for (int i = 0; i < arr.length - 1; i++,length--) {
+            minHead(arr,length);
+        }
+    }
+    // 构建最小堆
+    private static void minHead(int[] arr, int length) {
+        int i = length / 2 - 1; // 第一个非叶子结点
+        while (i >= 0) {
+            int j = 2 * i + 1;
+            if (j + 1 < length && arr[j] > arr[j + 1]) {
+                j++;
+            }
+            if (arr[i] > arr[j]) {
+                exchange(arr, i, j);
+            }
+            i--;
+        }
+        exchange(arr, 0, length - 1);
     }
 
 }
